@@ -189,10 +189,20 @@ export const useEncoder = () => {
         fileList,
         onChange: onChangeUpload,
     };
+    // Old sorting uses literal sorting
+    //const sortFileListAlphabetically = () => {
+    //   setFileList((prev) => [...prev].sort((a, b) => a.name.localeCompare(b.name)));
+    //};
 
+    // new sorting uses natural sorting, the browsers regional settings and ignores capitalization 
     const sortFileListAlphabetically = () => {
-        setFileList((prev) => [...prev].sort((a, b) => a.name.localeCompare(b.name)));
+        setFileList((prev) => 
+            [...prev].sort((a, b) => 
+                a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' })
+            )
+        );
     };
+
 
     const clearFileList = () => {
         setFileList([]);
